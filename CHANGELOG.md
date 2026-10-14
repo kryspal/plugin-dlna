@@ -4,7 +4,8 @@ All notable changes to this plugin are listed here. The version in `VERSION` is 
 
 ## 1.0.2
 
-- First release from the standalone repository; no functional change.
+- Rebuilt with Go 1.27.2 and golang.org/x/net v0.60.0 (security fixes).
+- First release from the standalone repository; no functional change to the casting behavior since the last published catalog version (1.0.1), plus the documentation and source cleanup for the public repository.
 
 ## 1.0.1
 
