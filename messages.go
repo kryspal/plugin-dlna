@@ -2,7 +2,7 @@ package main
 
 import "github.com/kryspal/plugin-sdk/i18n"
 
-// messages is the declared string table (change request 0057): en, zh-TW and zh-CN; other languages follow the i18n fallback chain.
+// messages is the declared string table: en, zh-TW and zh-CN; other languages follow the i18n fallback chain.
 var messages = i18n.New(messageTables)
 
 var messageTables = map[string]map[string]string{

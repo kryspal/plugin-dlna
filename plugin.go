@@ -12,7 +12,7 @@ import (
 
 const pluginID = "dlna"
 
-// versionFile is the single source of the plugin version (also the <version> of the bundled directory).
+// versionFile is the single source of the plugin version.
 //
 //go:embed VERSION
 var versionFile string
