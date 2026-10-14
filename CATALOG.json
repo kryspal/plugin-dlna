@@ -1,0 +1,14 @@
+{
+  "name": "DLNA",
+  "nameI18n": {
+    "zh-TW": "DLNA 投屏",
+    "zh-CN": "DLNA 投屏"
+  },
+  "description": "Play your videos on a television or other DLNA receiver on your home network. The receiver fetches the video straight from the server, so nothing is transcoded.",
+  "descriptionI18n": {
+    "zh-TW": "把影片投到家中網路上的電視或其他 DLNA 接收端播放。接收端直接從伺服器取得影片，不經過轉碼。",
+    "zh-CN": "把视频投到家中网络上的电视或其他 DLNA 接收端播放。接收端直接从服务器获取视频，不经过转码。"
+  },
+  "owner": "Kryspal Media",
+  "capabilities": ["cast.target"]
+}
