@@ -137,7 +137,7 @@ func (r *fakeRenderer) soap(ns string) http.HandlerFunc {
 		case "GetVolume":
 			reply(fmt.Sprintf(`<CurrentVolume>%d</CurrentVolume>`, r.volume))
 		case "SetVolume":
-			fmt.Sscan(args["DesiredVolume"], &r.volume)
+			_, _ = fmt.Sscan(args["DesiredVolume"], &r.volume)
 			reply("")
 		case "GetMute":
 			reply(`<CurrentMute>0</CurrentMute>`)
