@@ -10,5 +10,6 @@
     "zh-CN": "把视频投到家中网络上的电视或其他 DLNA 接收端播放。接收端直接从服务器获取视频，不经过转码。"
   },
   "owner": "Kryspal Media",
+  "homepage": "https://github.com/kryspal/plugin-dlna",
   "capabilities": ["cast.target"]
 }
