@@ -2,6 +2,8 @@ module github.com/kryspal/plugin-dlna
 
 go 1.27
 
+toolchain go1.27.2
+
 require (
 	github.com/huin/goupnp v1.3.0
 	github.com/kryspal/plugin-sdk v0.1.0
@@ -9,7 +11,7 @@ require (
 )
 
 require (
-	golang.org/x/net v0.58.0 // indirect
+	golang.org/x/net v0.60.0 // indirect
 	golang.org/x/sync v0.23.0 // indirect
 	golang.org/x/sys v0.48.0 // indirect
 	golang.org/x/text v0.42.0 // indirect
