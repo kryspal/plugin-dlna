@@ -1,8 +1,8 @@
 # dlna: DLNA cast plugin
 
-Owner: A4. Official plugin (closed source, change request 0117), implementing the protocol v1 `CastTarget` service (change request 0109, capability `cast.target`, permission `network.lan`, `cast_protocol` `dlna`) with `github.com/kryspal/plugin-sdk/sdk`. Free, no feature code; bundled in the image, reserved as an official ID, **disabled by default** (an enabled plugin sends multicast on the local network). `VERSION` is the single source of the version (`go:embed`).
+An official Kryspal Media plugin that casts to DLNA/UPnP MediaRenderer devices. It implements the protocol v1 `CastTarget` service (capability `cast.target`, permission `network.lan`, `cast_protocol` `dlna`) with [`github.com/kryspal/plugin-sdk`](https://github.com/kryspal/plugin-sdk). It is **disabled by default**, because an enabled plugin sends multicast on the local network. `VERSION` is the single source of the version (`go:embed`).
 
-The host owns the device list, the cast session, the authorization behind the media URL and play tracking (`internal/cast`); the plugin owns the protocol.
+The host owns the device list, the cast session, the authorization behind the media URL and play tracking; the plugin owns the protocol.
 
 ## What it does
 
@@ -25,10 +25,18 @@ Lines or `;`-separated `key=value`: `mime=video/mpeg` (content type), `features=
 
 GENA event subscriptions (state is polled), `CaptionInfo.sec` response header (the subtitle URL does not exist yet when the host calls Prepare; the DIDL carries it), per-brand preset profiles beyond the remembered variant, AVTransport:2 and RenderingControl:2 only devices, multi-subtitle.
 
+## Building and releasing
+
+Releases are built by the CI workflows in `.github/workflows/`: a `v*` tag builds linux/amd64 and linux/arm64 packages and creates a GitHub Release. Any change that alters the binary needs a new `VERSION`; a published version is never changed. `CATALOG.json` holds the display data for the plugin catalog.
+
 ## Dependencies
 
 `github.com/huin/goupnp` v1.3.0 (BSD-2-Clause): SSDP search, device descriptions, the AVTransport/RenderingControl SOAP clients. The copyright notice is in `NOTICE`.
 
 ## Tests
 
-`go test -race ./plugins/dlna/`: a fake MediaRenderer (description document, the two control endpoints with a state machine, switches for refused DIDL, 405 on POST, a Seek fault) covers Load order and DIDL content, the fallback and its memory, refused and never-playing devices, an unreachable device, control and status mapping, the `M-POST` retry, and unicast probing against a fake SSDP responder. `integration_test.go` runs the whole cast against a real software renderer (gmrender-resurrect from `test/cast`, A7): `DLNA_TEST_HOST=<renderer ip> DLNA_TEST_LOCAL=<this machine's ip> go test -v -run RealRenderer ./plugins/dlna` (skipped without those variables). It checks multicast discovery, the unicast probe, Prepare, Load (the renderer fetches the clip from a local Range-capable server), and, when the renderer's output waits for the clock, pause, seek, volume and stop. Verified 2026-10-13: discovery, probe and load work against gmrender-resurrect (full DIDL accepted, the renderer fetched the media); a fakesink without a clock plays the clip at once, so pause and seek need a synchronized sink.
+`go test -race ./...`: a fake MediaRenderer (description document, the two control endpoints with a state machine, switches for refused DIDL, 405 on POST, a Seek fault) covers Load order and DIDL content, the fallback and its memory, refused and never-playing devices, an unreachable device, control and status mapping, the `M-POST` retry, and unicast probing against a fake SSDP responder. `integration_test.go` runs the whole cast against a real software renderer (gmrender-resurrect): `DLNA_TEST_HOST=<renderer ip> DLNA_TEST_LOCAL=<this machine's ip> go test -v -run RealRenderer .` (skipped without those variables). It checks multicast discovery, the unicast probe, Prepare, Load (the renderer fetches the clip from a local Range-capable server), and, when the renderer's output waits for the clock, pause, seek, volume and stop. Verified against gmrender-resurrect: discovery, probe and load work against gmrender-resurrect (full DIDL accepted, the renderer fetched the media); a fakesink without a clock plays the clip at once, so pause and seek need a synchronized sink.
+
+## License
+
+Apache License 2.0, see `LICENSE` and `NOTICE`.
