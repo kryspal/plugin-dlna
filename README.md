@@ -37,6 +37,14 @@ Releases are built by the CI workflows in `.github/workflows/`: a `v*` tag build
 
 `go test -race ./...`: a fake MediaRenderer (description document, the two control endpoints with a state machine, switches for refused DIDL, 405 on POST, a Seek fault) covers Load order and DIDL content, the fallback and its memory, refused and never-playing devices, an unreachable device, control and status mapping, the `M-POST` retry, and unicast probing against a fake SSDP responder. `integration_test.go` runs the whole cast against a real software renderer (gmrender-resurrect): `DLNA_TEST_HOST=<renderer ip> DLNA_TEST_LOCAL=<this machine's ip> go test -v -run RealRenderer .` (skipped without those variables). It checks multicast discovery, the unicast probe, Prepare, Load (the renderer fetches the clip from a local Range-capable server), and, when the renderer's output waits for the clock, pause, seek, volume and stop. Verified against gmrender-resurrect: discovery, probe and load work against gmrender-resurrect (full DIDL accepted, the renderer fetched the media); a fakesink without a clock plays the clip at once, so pause and seek need a synchronized sink.
 
+## Official builds and releases
+
+This repository is the source code of the official Kryspal Media `dlna` plugin. Official versions are built by this repository's GitHub Actions workflow from a `v*` tag, attached to a GitHub Release, and then added to the Kryspal Media plugin catalog, which Kryspal signs. The Kryspal Media server installs and updates official plugins from that signed catalog and verifies the signature.
+
+A binary you build from this source yourself is **not** signed by Kryspal and is not part of the official catalog. You are free to build, modify and run it under the Apache License 2.0, but the server treats it as a third-party plugin.
+
+Release process (maintainers): update `VERSION` and `CHANGELOG.md` for any change that alters the binary, wait for the CI workflow to pass on `main`, then push an annotated tag `vX.Y.Z` that matches `VERSION`. The release workflow builds linux/amd64 and linux/arm64 packages, creates the GitHub Release and notifies the main repository, which verifies the packages and publishes the catalog. A published version is never changed.
+
 ## License
 
 Apache License 2.0, see `LICENSE` and `NOTICE`.
