@@ -2,6 +2,12 @@
 
 All notable changes to this plugin are listed here. The version in `VERSION` is the single source of the version number; a published version is never changed.
 
+## 1.0.3
+
+- Built with plugin SDK v0.2.0. No functional change.
+- Needs server 0.9.2 or newer.
+- Includes the documentation, release workflow and source cleanup done since the last published version.
+
 ## 1.0.2
 
 - Rebuilt with Go 1.27.2 and golang.org/x/net v0.60.0 (security fixes).
