@@ -2,6 +2,10 @@
 
 All notable changes to this plugin are listed here. The version in `VERSION` is the single source of the version number; a published version is never changed.
 
+## 1.0.4
+
+- Built with plugin SDK v0.5.0. No functional change.
+
 ## 1.0.3
 
 - Built with plugin SDK v0.2.0. No functional change.
